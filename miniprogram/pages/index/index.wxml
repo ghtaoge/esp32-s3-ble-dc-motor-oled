@@ -1,0 +1,46 @@
+<view class="container">
+  <view class="eyebrow">ESP32-S3 · TB6612 · OLED</view>
+  <view class="title">直流电机控制台</view>
+  <view class="subtitle">蓝牙直连，调节 PWM 与方向，小屏同步显示。</view>
+  <view class="card">
+    <view class="row"><view class="card-title">{{connected ? deviceName : '连接开发板'}}</view><text class="badge">{{connected ? '已连接' : '未连接'}}</text></view>
+    <view class="muted">{{connected ? (oledReady ? 'OLED 已检测到 · SDA 8 / SCL 9' : '未检测到 OLED，请检查接线后重启') : '给开发板供电，打开手机蓝牙后搜索 S3-MOTOR'}}</view>
+    <button wx:if="{{!connected}}" class="primary" loading="{{scanning}}" disabled="{{scanning || !!connectingId}}" bindtap="search">{{scanning ? '正在搜索…' : '搜索开发板'}}</button>
+    <button wx:else class="secondary" bindtap="disconnect">断开连接并停止</button>
+    <block wx:if="{{!connected}}"><button wx:for="{{devices}}" wx:key="deviceId" class="device" data-id="{{item.deviceId}}" loading="{{connectingId === item.deviceId}}" disabled="{{!!connectingId}}" bindtap="connect">{{item.name}} · {{item.RSSI === null ? '--' : item.RSSI}} dBm</button></block>
+    <text class="link" bindtap="openSettings">蓝牙权限设置</text>
+  </view>
+  <view class="card">
+    <view class="row"><view class="card-title">设置 PWM 占空比</view><text class="badge">点击启动后生效</text></view>
+    <view class="angle">{{speed}}<text class="degree">%</text></view>
+    <slider min="1" max="100" step="1" value="{{speed}}" disabled="{{sending || stopping}}" activeColor="#b5edcb" backgroundColor="#40534b" block-color="#eef7f3" block-size="24" bindchanging="previewSpeed" bindchange="changeSpeed" />
+    <view class="row scale"><text>1%</text><text>50%</text><text>100%</text></view>
+    <view class="presets"><button class="{{direction === 1 ? 'primary' : 'secondary'}}" data-direction="1" disabled="{{sending || stopping}}" bindtap="selectDirection">正转</button><button class="{{direction === 2 ? 'primary' : 'secondary'}}" data-direction="2" disabled="{{sending || stopping}}" bindtap="selectDirection">反转</button></view>
+    <button class="primary" disabled="{{!connected || !pwmReady || sending || stopping}}" loading="{{sending}}" bindtap="run">启动 / 应用设置</button>
+    <button class="release" disabled="{{!connected || stopping}}" loading="{{stopping}}" bindtap="stop">停止输出</button>
+    <view class="muted">滑块和方向只修改待发送设置。换向先降至零并等待，再逐步升速；正反方向取决于电机接线。</view>
+    <view class="success" wx:if="{{syncText}}">{{syncText}}</view>
+  </view>
+  <view class="card">
+    <view class="row"><view class="card-title">开发板反馈</view><text class="badge">{{connected ? (transitioning ? '正在过渡' : running ? '正在输出' : '输出已停') : '等待连接'}}</text></view>
+    <block wx:if="{{connected}}">
+      <view class="metrics"><view><text class="metric-label">目标 PWM</text><text class="metric-value">{{targetSpeed}}%</text></view><view><text class="metric-label">当前 PWM</text><text class="metric-value">{{outputSpeed}}%</text></view><view><text class="metric-label">当前方向指令</text><text class="metric-value small">{{outputDirectionText}}</text></view></view>
+      <view class="metrics"><view><text class="metric-label">编码器转速</text><text class="metric-value small">{{rpmText}}</text></view><view><text class="metric-label">目标方向</text><text class="metric-value small">{{targetDirectionText}}</text></view><view><text class="metric-label">PWM 频率</text><text class="metric-value small">{{pwmHz / 1000}} kHz</text></view></view>
+      <view class="muted">{{reasonText}}。{{!pwmReady ? 'PWM 不可用，请检查后复位开发板。' : ''}}</view>
+      <view class="muted" wx:if="{{encoderConfigured}}">{{pulsesPerRev}} 个 A 相上升沿 / 被测轴一圈。单相测速只显示转速大小，方向来自控制指令。</view>
+      <view class="muted" wx:else>未接电机轴测速编码器，暂不显示实测 RPM；PWM 百分比不等于转速百分比。EC11 旋钮未接入本版本。</view>
+    </block>
+    <view wx:else class="muted">连接只读取状态。重新连接或返回页面后，都需要手动点击启动。</view>
+    <view class="muted">离开页面将关闭连接。运行时持续保活，固件在 {{leaseMs}}ms 内未收到有效控制保活时停止输出。停止输出后电机可能继续滑行。</view>
+  </view>
+  <view class="error" wx:if="{{errorText}}">{{errorText}}</view>
+  <view class="footer"><view>TB6612：AIN1 4 · AIN2 5 · PWMA 6 · STBY 7</view><view>OLED：3.3V · SDA → GPIO8 · SCL → GPIO9</view></view>
+  <view wx:if="{{showPrivacy}}" class="privacy-mask" catchtap="rejectPrivacy">
+    <view class="privacy-card" catchtap="ignorePrivacyTap">
+      <view class="card-title">连接前的小提示</view>
+      <view class="subtitle">我们使用蓝牙连接开发板，控制和状态数据通过蓝牙传输，不上传服务器。请阅读并同意<text class="link" bindtap="openPrivacy">{{privacyName}}</text>。</view>
+      <button id="agree-privacy" class="primary" open-type="agreePrivacyAuthorization" bindtap="preparePrivacyAgree" bindagreeprivacyauthorization="agreePrivacy" loading="{{privacyAgreePending}}">同意并继续</button>
+      <button class="secondary" bindtap="rejectPrivacy">暂不连接</button>
+    </view>
+  </view>
+</view>

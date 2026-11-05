@@ -1,0 +1,18 @@
+{
+  "appid": "touristappid",
+  "projectname": "esp32-s3-ble-dc-motor-oled",
+  "description": "ESP32-S3 TB6612 直流电机与 OLED 蓝牙控制",
+  "compileType": "miniprogram",
+  "miniprogramRoot": "./",
+  "setting": {
+    "es6": true, "enhance": true, "minified": true, "postcss": true,
+    "urlCheck": true, "compileWorklet": false, "uglifyFileName": false,
+    "uploadWithSourceMap": true, "packNpmManually": false,
+    "packNpmRelationList": [], "minifyWXSS": true, "minifyWXML": true,
+    "localPlugins": false, "disableUseStrict": false, "useCompilerPlugins": false,
+    "condition": false,
+    "babelSetting": { "ignore": [], "disablePlugins": [], "outputPath": "" }
+  },
+  "packOptions": { "ignore": [{ "value": "tests", "type": "folder" }], "include": [] },
+  "simulatorPluginLibVersion": {}, "editorSetting": {}
+}

@@ -1,0 +1,12 @@
+{
+  "pages": ["pages/index/index"],
+  "window": {
+    "navigationBarTitleText": "直流电机控制",
+    "navigationBarBackgroundColor": "#10191a",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#10191a"
+  },
+  "permission": { "scope.bluetooth": { "desc": "连接你的 ESP32 电机控制器并读取电机状态" } },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

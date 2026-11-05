@@ -1,0 +1,5 @@
+{
+  "name": "esp32-s3-ble-dc-motor-oled",
+  "private": true,
+  "scripts": { "test": "node --test miniprogram/tests/*.test.js" }
+}

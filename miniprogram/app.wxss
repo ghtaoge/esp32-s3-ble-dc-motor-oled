@@ -1,0 +1,34 @@
+page { background: #10191a; color: #eef7f3; font-size: 28rpx; }
+button { border-radius: 18rpx; font-size: 28rpx; margin-top: 20rpx; }
+button::after { border: none; }
+button[disabled] { opacity: .45; }
+.container { padding: 52rpx 32rpx 64rpx; }
+.eyebrow { color: #a6debf; font-size: 22rpx; letter-spacing: 3rpx; }
+.title { font-size: 48rpx; font-weight: 700; margin-top: 18rpx; }
+.subtitle { color: #adbfba; line-height: 1.8; margin: 20rpx 0 30rpx; }
+.card { background: #1c2929; border: 1rpx solid #344441; padding: 30rpx; border-radius: 26rpx; margin-top: 28rpx; }
+.row { display: flex; justify-content: space-between; align-items: center; }
+.card-title { font-size: 31rpx; font-weight: 600; }
+.muted { color: #adbfba; font-size: 24rpx; line-height: 1.8; margin-top: 16rpx; }
+.badge { color: #a6debf; font-size: 22rpx; white-space: nowrap; margin-left: 12rpx; }
+.primary { background: #b5edcb; color: #10291d; font-weight: 600; }
+.secondary, .device { background: #30423e; color: #e4f3eb; }
+.release { background: #3b322c; color: #f4c79a; }
+.link { color: #b5edcb; display: inline-block; margin-top: 20rpx; font-size: 24rpx; }
+.angle { font-size: 104rpx; font-weight: 600; text-align: center; padding: 24rpx 0 8rpx; line-height: 1.3; }
+.degree { font-size: 44rpx; color: #a6debf; margin-left: 6rpx; }
+slider { margin: 24rpx 12rpx 18rpx; }
+.scale { color: #adbfba; font-size: 22rpx; margin: 0 8rpx; }
+.presets { display: flex; margin: 4rpx -6rpx 0; }
+.presets button { flex: 1; padding: 0 6rpx; margin-left: 6rpx; margin-right: 6rpx; font-size: 26rpx; }
+.metrics { display: flex; justify-content: space-between; margin-top: 24rpx; }
+.metrics > view { width: 33%; }
+.metric-label, .metric-value { display: block; }
+.metric-label { color: #adbfba; font-size: 21rpx; }
+.metric-value { font-size: 31rpx; margin-top: 10rpx; font-weight: 600; }
+.metric-value.small { font-size: 25rpx; padding-right: 8rpx; }
+.error { color: #ffb5a7; padding: 24rpx; line-height: 1.7; }
+.success { margin-top: 20rpx; color: #b5edcb; font-size: 25rpx; }
+.footer { text-align: center; color: #91aaa0; font-size: 22rpx; line-height: 1.9; margin-top: 36rpx; }
+.privacy-mask { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: flex; align-items: center; justify-content: center; z-index: 100; }
+.privacy-card { width: 580rpx; box-sizing: border-box; padding: 36rpx; border-radius: 24rpx; background: #1c2929; }

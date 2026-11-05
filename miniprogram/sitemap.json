@@ -1,0 +1,1 @@
+{ "desc": "本地蓝牙控制页面", "rules": [{ "action": "disallow", "page": "*" }] }
